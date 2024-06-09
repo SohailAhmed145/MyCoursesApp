@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,7 +105,9 @@ fun CourseCard(item: Courses, onClick: () -> Unit){
                     .aspectRatio(16f / 9f),
                 contentScale = ContentScale.Crop
             )
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)) {
                 Text(text = item.title)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = item.body, maxLines = 1, style = MaterialTheme.typography.bodySmall)
@@ -111,4 +115,32 @@ fun CourseCard(item: Courses, onClick: () -> Unit){
 
         }
     }
+}
+
+@Composable
+fun AboutScreen(onNavigateUp: () -> Unit){
+    Scaffold (){ paddingValues ->
+        Column (
+            modifier = Modifier
+                .padding(paddingValues)
+        ){
+            AppBar(title = "About", onNavigateUp)
+            Spacer(modifier = Modifier.height(20.dp))
+            Column (
+                modifier = Modifier.padding(16.dp)
+            ){
+                Text(text = "This app is a demonstration of about navigation in android compose")
+                Spacer(modifier = Modifier.height(20.dp))
+                val udemy_link = LocalUriHandler.current
+                Button(onClick = { udemy_link.openUri("https://www.udemy.com/course/the-complete-android-10-developer-course-mastering-android/?couponCode=ABCART0923") }) {
+                    Text(text = "View Our Udemy Courses")
+                }
+            }
+         }
+    }
+}
+
+@Composable
+fun AppBar(title: String, onNavigateUp: () -> Unit)){
+    
 }
